@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Nixie Configurator
+//  Gizmo Configurator
 //
 //  Created by Sebastian Moruszewicz on 12/15/24.
 //
@@ -8,23 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var ble: BleService = BleService()
+    @State var appPath = NavigationPath()
+    @EnvironmentObject var service: PeripheralService
     
     var body: some View {
-        NavigationStack{
+        NavigationStack(path: $appPath) {
             ZStack {
                 Color(UIColor.systemGroupedBackground)
                 .ignoresSafeArea()
-                DeviceListView(ble: ble)
+                DeviceListView()
             }
         }
         .onAppear {
-            ble.registerServices(services: NixieConfigModel.Services)
-            ble.startBle()
+            service.registerServices(services: NixieConfigModel.ServiceIds)
+            service.start()
+        }
+        .onChange(of: service.state) {
+            switch service.state{
+            case .off, .unauthorized, .error:
+                (appPath.removeLast(appPath.count))
+            default:
+                ()
+            }
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

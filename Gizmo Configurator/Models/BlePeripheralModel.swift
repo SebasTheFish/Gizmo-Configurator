@@ -1,57 +1,69 @@
 //
 //  PeripheralModel.swift
-//  Nixie Configurator
+//  Gizmo Configurator
 //
 //  Created by Sebastian Moruszewicz on 12/22/24.
 //
 
 import CoreBluetooth
+import SwiftUI
 
-class BlePeripheralModel: ObservableObject, Identifiable {
-    private let manager: BleService
+class BlePeripheralModel: PeripheralModel, Configurable {
+    // Private Variables
+    private let manager: BlePeripheralService
     private let peripheral: CBPeripheral
     private var characteristics: Set<CBCharacteristic>
-    @Published var model: PeripheralModel
     
-    init(peripheral: CBPeripheral, manager: BleService) {
+    
+    
+    // Initializer/Deinitializer
+    init(peripheral: CBPeripheral, manager: BlePeripheralService) {
         self.manager = manager
         self.peripheral = peripheral
         self.characteristics = Set()
-        self.model = PeripheralModel()
+        super.init(id: peripheral.identifier.uuidString, configModelInit: NixieConfigModel.init)
     }
     
-    // Methods
+    deinit {
+        switch state {
+        case .disconnected:
+            ()
+        default:
+            manager.disconnect(peripheral: peripheral)
+        }
+    }
+    
+    
+    
+    // Connection Method Overrides
     func connect() {
         manager.connect(peripheral: peripheral)
     }
 
     func disconnect() {
         manager.disconnect(peripheral: peripheral)
-        model.reset()
-        objectWillChange.send()
     }
     
-    func addCharacteristic(char: CBCharacteristic) {
+    func push() {
+        // Write all the characteristics
+        for char in characteristics {
+            if let data = getValue(valueId: char.uuid.uuidString) {
+                peripheral.writeValue(data, for: char, type: .withResponse)
+            }
+        }
+        updateValues()
+    }
+    
+    
+    
+    // Manager methods
+    func addChar(char: CBCharacteristic) {
         characteristics.insert(char)
     }
     
     func update(char: CBCharacteristic) {
-        model.update(char: char)
-        objectWillChange.send()
-    }
-    
-    func push() {
-        for char in characteristics {
-            if let data = model.pushValue(char: char) {
-                peripheral.writeValue(data, for: char, type: .withResponse)
-            }
+        if let value = char.value {
+            setValue(valueId: char.uuid.uuidString, value: value)
         }
-        model.pushed()
-        objectWillChange.send()
-    }
-    
-    // Parameters
-    var id: UUID {
-        return peripheral.identifier
     }
 }

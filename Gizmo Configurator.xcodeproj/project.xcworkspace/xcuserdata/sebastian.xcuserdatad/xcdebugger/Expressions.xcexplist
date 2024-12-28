@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in DeviceListView.body.getter:DeviceListView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "service">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "NixieConfigModel.update(characteristic:):NixieConfigModel.swift">
       </ContextState>
       <ContextState
