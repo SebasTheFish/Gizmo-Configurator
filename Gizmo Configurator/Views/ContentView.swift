@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Nixie Configurator
+//  Gizmo Configurator
 //
 //  Created by Sebastian Moruszewicz on 12/15/24.
 //
@@ -8,23 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var ble: BleService = BleService()
+    @State var appPaths: AppPaths = AppPaths()
     
     var body: some View {
-        NavigationStack{
-            ZStack {
-                Color(UIColor.systemGroupedBackground)
-                .ignoresSafeArea()
-                DeviceListView(ble: ble)
+        ZStack {
+            TabView {
+                Tab("Nearby", systemImage: "wifi.circle") {
+                    NavigationStack(path: $appPaths.nearby) {
+                        NearbyListView()
+                    }
+                }
+                Tab("Library", systemImage: "list.bullet.rectangle") {
+                    NavigationStack(path: $appPaths.models) {
+                        ModelListView()
+                    }
+                }
             }
         }
-        .onAppear {
-            ble.registerServices(services: NixieConfigModel.Services)
-            ble.startBle()
-        }
+        .environment(appPaths)
     }
 }
-
-#Preview {
-    ContentView()
-}
+//
+//#Preview {
+//    let modelRepo = DeviceRepository(modelContext: .init(.init(for: Device.self)), demo: true)
+//    let accRepo = AccessoryRepository()
+//    ContentView()
+//        .environment(accRepo)
+//        .environment(modelRepo)
+//        .onAppear { accRepo.registerModelRepo(modelRepo: modelRepo) }
+//}

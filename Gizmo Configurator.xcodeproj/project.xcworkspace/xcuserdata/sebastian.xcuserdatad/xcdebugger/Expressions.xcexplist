@@ -3,7 +3,48 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #2 in AccessoryRepository.centralManager(_:didDiscover:advertisementData:rssi:):AccessoryRepository.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in NearbyParameterView.body.getter:NearbyParameterView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "accessory.config[datum.uuid]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AccessoryRepository.pushUpdate(accessory:):AccessoryRepository.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "accessory.parameters">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AccessoryRepository.peripheral(_:didUpdateValueFor:error:):AccessoryRepository.swift">
+      </ContextState>
+      <ContextState
          contextName = "NixieConfigModel.update(characteristic:):NixieConfigModel.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Accessory.pushConfig():Accessory.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in DeviceListView.body.getter:DeviceListView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "service">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #2 in closure #2 in closure #1 in closure #1 in ModelListView.body.getter:ModelListView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "document">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "PeripheralModel.pushValue(char:):PeripheralModel.swift">
@@ -13,6 +54,30 @@
             </PersistentString>
             <PersistentString
                value = "currentConfig">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AccessoryRepository.centralManager(_:didDiscover:advertisementData:rssi:):AccessoryRepository.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "CBAdvertisementDataServiceUUIDsKey">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #5 in NearbyParameterView.body.getter:NearbyParameterView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "accessory.config[datum.uuid]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in AccessoryRepository.startScanning():AccessoryRepository.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "modelRepo">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

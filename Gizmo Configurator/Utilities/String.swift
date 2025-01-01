@@ -1,6 +1,6 @@
 //
 //  String.swift
-//  Nixie Configurator
+//  Gizmo Configurator
 //
 //  Created by Sebastian Moruszewicz on 12/23/24.
 //
