@@ -8,28 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var appPath = NavigationPath()
-    @EnvironmentObject var service: PeripheralService
+    @State var appPaths: AppPaths = AppPaths()
     
     var body: some View {
-        NavigationStack(path: $appPath) {
-            ZStack {
-                Color(UIColor.systemGroupedBackground)
-                .ignoresSafeArea()
-                DeviceListView()
+        ZStack {
+            TabView {
+                Tab("Nearby", systemImage: "wifi.circle") {
+                    NavigationStack(path: $appPaths.nearby) {
+                        NearbyListView()
+                    }
+                }
+                Tab("Library", systemImage: "list.bullet.rectangle") {
+                    NavigationStack(path: $appPaths.models) {
+                        ModelListView()
+                    }
+                }
             }
         }
-        .onAppear {
-            service.registerServices(services: NixieConfigModel.ServiceIds)
-            service.start()
-        }
-        .onChange(of: service.state) {
-            switch service.state{
-            case .off, .unauthorized, .error:
-                (appPath.removeLast(appPath.count))
-            default:
-                ()
-            }
-        }
+        .environment(appPaths)
     }
 }
+//
+//#Preview {
+//    let modelRepo = DeviceRepository(modelContext: .init(.init(for: Device.self)), demo: true)
+//    let accRepo = AccessoryRepository()
+//    ContentView()
+//        .environment(accRepo)
+//        .environment(modelRepo)
+//        .onAppear { accRepo.registerModelRepo(modelRepo: modelRepo) }
+//}
